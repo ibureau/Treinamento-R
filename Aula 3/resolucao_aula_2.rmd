@@ -1,0 +1,101 @@
+---
+title: "Resolução dos exercícios da aula 2"
+author: Rafael N. Magalhães
+date: "`r format(Sys.time(), '%d de %B, %Y')`"
+output: 
+  revealjs::revealjs_presentation:
+    theme: simple
+    highlight: tango
+    transition: slide
+    center: true
+    css: stylesheet.css
+    reveal_options:
+      controls: false  # Desativar botões de navegação no slide
+      mouseWheel: true # Passar slides com o mouse
+  beamer_presentation:
+    highlight: tango
+    keep_tex: false # Mudar se quiser ter o arquivo .tex
+    toc: true # Seções definidas como nível 1
+    incremental: false # Sem bullets incrementais. Para ativar específ., usar >-
+    slide_level: 2 # Slides definidos como nível 2
+---
+
+
+## Resolução dos exercícios
+Se necessário, consulte a documentação das funções `seq()` e `rep()` para responder as perguntas 1 a 3:
+
+1. Use a função `seq()` para criar a seguinte sequência: 2, 5, 8,  11
+```{r results='hide'}
+seq(from = 2, to = 11, by = 3)
+```
+
+2. Use a função `rep()` para gerar a seguinte sequência: 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4
+```{r results='hide'}
+rep(1:4, times = 3)
+```
+
+3. Use a função `rep()` para gerar a seguinte sequência: 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4
+```{r results='hide'}
+rep(1:4, each = 3)
+```
+
+
+## Resolução dos exercícios
+4. Crie um novo objeto que contenha apenas os carros cujo consumo (`mpg`) esteja entre 15 e 20.
+```{r results='hide'}
+bd <- mtcars
+ex_4 <- bd[bd$mpg > 15 & bd$mpg < 20,]
+```
+
+5. Crie um novo objeto que contenha apenas os carros com transmissão automática e valor de `cyl` igual a 6.
+```{r results='hide'}
+ex_5 <- bd[bd$cyl == 6 & bd$am == 0,]
+```
+
+6. Crie um novo objeto que contenha apenas os carros cujos valores de `gear` ou `carb` sejam iguais a 0.
+```{r results='hide'}
+ex_6 <- bd[bd$gear == 0 | bd$carb == 0,]
+```
+
+## Resolução dos exercícios
+7. Crie um novo objeto que tenha apenas as linhas pares de `bd`.
+```{r results='hide'}
+ex_7 <- bd[c(FALSE, TRUE),]
+```
+
+8. Rode o comando `TRUE * FALSE` e explique o resultado.
+```{r results='hide'}
+# Quando executamos um operador aritmético (multiplicação), o R tenta transformar todas as informações em números. Assim, TRUE vira 1 e FALSE vira 0. Consequentemente, 1 * 0 = 0
+```
+
+9. Troque todos os valores 0 por 2 na coluna `am`.
+```{r results='hide'}
+bd[bd$am == 0,] <- 2
+```
+
+
+## Resolução dos exercícios
+10. Rode os comandos abaixo, e explique o resultado.
+```{r results='hide'}
+x <- c(2, 4, 6, 8)
+y <- c(TRUE, TRUE, FALSE, TRUE)
+sum(x[y])
+
+# O comando sum(x[y]) aplica a função de soma apenas nos casos em que y tem valor de TRUE. Note que o R não exige que você faça um teste explícito: ao usar um vetor lógico em uma função aritmética, o R já assume que você está fazendo um teste lógico.
+```
+
+## Resolução dos exercícios
+11. Cálculo do Número Efetivo de Partidos para a Câmara dos Deputados
+
+```{r}
+# Resolução passo a passo
+cadeiras <- c(55, 54, 38, 35, 34, 33, 32, 31, 30, 28, 27, 13, 11, 10, 10, 10, 8, 8, 8, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1)
+prop_cadeiras <- cadeiras / sum(cadeiras) # proporções de cadeiras por partido
+prop_cadeiras_quad <- prop_cadeiras^2
+NEP <- 1 / sum(prop_cadeiras_quad) # aplicação da fórmula
+
+# No R, geralmente existe mais de um jeito de fazer as coisas. Esta é outra alternativa de cálculo, resolvendo a conta em apenas uma linha (mas com código mais denso)
+1 / sum((cadeiras / sum(cadeiras))^2)
+
+```
+

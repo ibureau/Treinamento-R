@@ -1,0 +1,67 @@
+---
+title: "Por que R?"
+author: Rafael N. Magalhães
+date: "`r format(Sys.time(), '%d de %B, %Y')`"
+output: 
+  revealjs::revealjs_presentation:
+    theme: simple
+    highlight: tango
+    transition: slide
+    center: true
+    css: stylesheet.css
+    reveal_options:
+      controls: false  # Desativar botões de navegação no slide
+      mouseWheel: true # Passar slides com o mouse
+  beamer_presentation:
+    highlight: tango
+    keep_tex: false # Mudar se quiser ter o arquivo .tex
+    toc: true # Seções definidas como nível 1
+    incremental: false # Sem bullets incrementais. Para ativar específ., usar >-
+    slide_level: 2 # Slides definidos como nível 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+
+```
+## O que é o R 
+>- Linguagem de programação de código aberto
+>- Referência para pesquisa em estatística
+>- Construída por estatísticos (isso é bom e ruim)
+>- [The R Inferno](https://www.burns-stat.com/pages/Tutor/R_inferno.pdf)
+
+
+
+## O que é o R
+"Using R is a bit akin to smoking.The beginning is difficult, one may get headaches and even gag the first few times. But in the long run, it becomes pleasurable and even addictive. 
+
+Yet, deep down, for those willing to be honest, there is something not fully healthy in it.“
+
+--Francois Pinard
+
+## Comunidade
+>- [R-Bloggers](https://www.r-bloggers.com/)
+>- [R-Ladies Global](https://rladies.org/)
+>- [R-Ladies SP](https://www.meetup.com/pt-BR/R-Ladies-Sao-Paulo/)
+>- [Minas Programam](https://minasprogramam.com/quem-faz/)
+
+## Programa de hoje
+- Instalação do R e Rstudio
+- Estatística descritiva
+- Notação matemática básica
+- Criação de vetores
+- Operações com vetores
+- Instalação de pacotes
+
+  
+  
+```
+install.packages("swirl")
+library("swirl")
+install_course("R Programming")
+swirl()
+```
+
+
+
+
+

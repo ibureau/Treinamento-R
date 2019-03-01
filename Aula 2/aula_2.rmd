@@ -1,0 +1,318 @@
+---
+title: "Aula 2 - Funções, Dataframes, Operadores Lógicos"
+author: Rafael N. Magalhães
+date: "`r format(Sys.time(), '%d de %B, %Y')`"
+output: 
+  beamer_presentation:
+    highlight: tango
+    keep_tex: false # Mudar se quiser ter o arquivo .tex
+    toc: true # Seções definidas como nível 1
+    incremental: false # Sem bullets incrementais. Para ativar específ., usar >-
+    slide_level: 2 # Slides definidos como nível 2
+  revealjs::revealjs_presentation:
+    theme: simple
+    highlight: tango
+    transition: slide
+    center: true
+    css: stylesheet.css
+    reveal_options:
+      controls: false  # Desativar botões de navegação no slide
+      mouseWheel: true # Passar slides com o mouse
+---
+
+# A analogia do cigarro não foi bem recebida...
+
+##
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(gganimate)
+library(gapminder)
+
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  facet_wrap(~continent) +
+  # Here comes the gganimate specific bits
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
+  transition_time(year) +
+  ease_aes('linear')
+```
+
+## Programa para hoje
+1. Revisão da aula passada
+2. Funções
+3. Tipos de dados
+3. Dataframes
+4. Subsetting
+5. Operadores lógicos
+6. Documentação
+
+
+# Retomando o básico
+
+## Na semana passada...
+Aprendemos a usar o R como uma calculadora!
+
+```{r results='hide'}
+# Qual é o resultado?
+2 + 9 * 4
+4 + 3 / 10^2
+pi - 3
+
+# Notação científica
+5 * 10^2
+5 * 10^-2
+111111 * 111111
+1111111 * 1111111
+```
+
+## Na semana passada...
+Aprendemos a criar e manipular objetos!
+```{r}
+# Qual é o valor de a?
+a <- 4
+a <- a * 5
+a <- a + 10
+```
+
+Podemos criar vários objetos de uma vez:
+```{r}
+x <- y <- z <- w <- pi
+```
+
+Agora nós criamos um monte de objetos na memória do R. Vamos apagá-los para nosso ambiente não ficar bagunçado
+```{r}
+rm(list = ls())
+```
+
+
+## Na semana passada...
+Aprendemos a criar e manipular vetores!
+```{r}
+numeros <- c(1, 4, 10, pi, 1/3)
+texto <- c("a", "b", "iBureau")
+(tudo_junto <- c(numeros, texto)) # tudo entre parênteses para mostrar  conteúdo do objeto
+```
+Note que, quando juntamos números e texto, **todos os elementos viram texto**. Vamos tratar das particularidades de texto mais para a frente.
+
+## Na semana passada...
+Quando fazemos operações com vetores de tamanhos diferentes, o R vai retomar o vetor mais curto até completar todas as operações
+```{r}
+a <- c(10, 20, 30)
+b <- c(1, 2, 3, 4, 5, 6, 7, 8, 9)
+a + b
+```
+
+Hoje vamos usar esses blocos fundamentais para explorar algumas das funções mais centrais do R.
+
+# Funções
+
+## Funções
+Funções são o arroz-com-feijão da programação estatística no R. Muitas das análises que vamos fazer no curso giram em torno de utilizar as funções corretas e identificar os **argumentos** apropriados para cada caso.
+
+Nós já vimos alguns exemplos de funções na primeira aula:
+
+```
+install.packages() # instala pacotes
+library() # carrega pacotes na memória
+sessionInfo() # Informações sobre a versão do R
+```
+
+O principal uso das funções é automatizar operações que, se fossem feitas manualmente, demorariam muito tempo, estariam sujeitas a erros ou simplesmente seriam muito tediosas.
+
+## Funções
+Por exemplo, se precisarmos achar a média entre dois números, poderíamos fazer o cálculo manualmente
+
+```{r}
+(35 + 65)/2
+```
+
+Mas se tivéssemos 1000 números em vez de 2, esse processo seria extremamente longo e cansativo. Assim, podemos simplesmente usar a função `mean()` para calcular a média de todos os números de 1 a 1000
+
+```{r}
+mean(1:1000)
+```
+
+
+## Funções
+O R possui inúmeras funções para fazer todo tipo de cálculo que vocês possam imaginar (e também o que vocês nem conseguem imaginar). Ainda assim, à medida que vocês avançam no uso, haverá a necessidade de fazer tarefas específicas, para as quais nenhuma função existente é satisfatória. Nesses momentos fica evidente a vantagem de o R ser uma linguagem de programação, pois podemos **criar nossas próprias funções**. 
+
+Por enquanto, vamos explorar algumas funções que já existem no R. Vocês perceberam que não precisei digitar todos os números de 1 a 1000 no slide anterior?
+
+```{r}
+numeros <- 1:1000
+numeros_desc <- 1000:1 
+```
+
+Muito mais fácil do que `numeros <- c(1, 2, 3, ..., 1000)`
+
+## Funções
+Mas e se eu quisesse tirar a média dos números ímpares de 1 a 1000? Teria que digitar os números um a um?
+
+Nesses momentos é bom lembrar que a **preguiça** é um dos traços que separam os bons programadores dos demais. Quase todas as tarefas tediosas e repetitivas na programação podem ser automatizadas de alguma maneira.
+
+Obviamente, o R tem a função `seq()` que nos permite criar um vetor de números ímpares. Note como são utilizados os argumentos da função.
+
+```{r}
+impares <- seq(from = 1,  to = 1000,  by = 2)
+mean(impares)
+```
+
+## Funções
+O R vem pré-instalado com diversas funções estatísticas -- afinal, essa é uma de suas razões de existir. Além da função `mean()`, que vimos no slide anterior, podemos olhar também para outras estatísticas descritivas
+
+```{r results='hide'}
+sd(impares) # desvio-padrão
+var(impares) # variância
+range(impares) # amplitude
+IQR(impares) # intervalo interquartil
+```
+
+O comando `summary()` nos dá uma visão geral sobre esse vetor
+
+```{r}
+summary(impares)
+```
+
+# Tipos de dados
+## Tipos de dados
+Linguagens de programação aramazenam variáveis sob diferentes classes
+
+Hoje vamos fazer apenas uma discussão geral para que vocês saibam que elas existem, e comentaremos os detalhes ao longo das aulas
+
+- Valores numéricos: `double`, `integer`
+- Texto: `character`
+- Fatores: `factor`
+- Valores lógicos: `logical`
+- Valores especiais: `NA`, `NULL`, `Inf`, `NaN`
+
+Para descobrir o tipo de um objeto, você pode usar a função `typeof()`
+
+```{r results='hide'}
+typeof(impares)
+```
+
+# Dataframes
+## Dataframes
+Podemos pensar nos dataframes como **coleções de vetores**. É, de longe, o formato mais utilizado para a manipulação de bases de dados. o R tem suporte para outras estruturas de dados como matrizes e listas, que veremos conforme a necessidade.
+
+```{r results='hide'}
+nomes <- c("Rafael", "Isllane", "Ana", "Pedro")
+formacao <- c("Ciência Política", "GPP", "Adm Publica", "GPP")
+tempo_empresa <- c(3, 10, 10, 1)
+
+equipe_acp <- data.frame(nomes, formacao, tempo_empresa)
+
+View(equipe_acp) # visualização
+nrow(equipe_acp) # número de linhas
+ncol(equipe_acp) # número de colunas
+head(equipe_acp) # primeiras obs
+summary(equipe_acp) # resumo dos dados
+```
+
+## Tidy data
+- Observações nas linhas
+- Atributos nas colunas
+- Valores nas células
+
+![Tidy Data](imagens/tidy.png)
+
+# Subsetting
+## Subsetting para vetores
+As ferramentas que vamos ver agora servem para "pinçar" informações que estã na memória do R. Voltando ao vetor de números ímpares que criamos mais cedo, suponha que eu queira saber o valor do 287º elemento
+
+```{r results='hide'}
+impares[287]
+```
+
+Podemos expandir o operador `[` para diversas seleções, de acordo com a necessidade
+
+```{r results='hide'}
+impares[c(1, 76, 48)] # seleção de diversos números
+impares[-c(1:250)] # todos os números menos os 250 primeiros
+impares[impares > 900] # apenas valores maiores que 900
+```
+Note que **sempre** podemos guardar os resultados dessas operações em um novo objeto
+
+## Subsetting para dataframes
+O funcionamento do operador `[` é semelhante para dataframes, mas precisamos atentar para as dimensões de linhas e colunas
+
+```{r results='hide'}
+equipe_acp[1, 3] # linha 1, coluna 3
+equipe_acp[1,] # retorna toda a linha 1
+equipe_acp[,3] # retorna toda a coluna 3
+equipe_acp[,c(1, 3)] # retorna as colunas 1 e 3
+```
+
+A diferença é que, com dataframes, é muito comum utilizarmos o operador `$` para selecionar colunas
+```{r results='hide'}
+equipe_acp$tempo_empresa # seleciona a variável "tempo de empresa"
+equipe_acp[,3] # mesmo resultado
+```
+
+# Operadores Lógicos
+## Operadores Lógicos
+Para seleções mais complexas, é comum que se precise recorrer a operadores lógicos. 
+
+Os mais comuns são `&` e `|`, mas todos os operadores relacionais também são reconhecidos: `==` (igual a), `!=` (diferente de), `>` (maior que), `<` (menor que), `>=` (maior ou igual que), `<=` (menor ou igual que)
+
+```{r results='hide'}
+equipe_acp[equipe_acp$tempo_empresa == 10,] # apenas as pessoas com 10 meses de empresa
+equipe_acp[equipe_acp$tempo_empresa < 5,] # apenas as pessoas com menos de 5 meses de empresa
+equipe_acp[equipe_acp$tempo_empresa < 5 | equipe_acp$formacao == "Adm Publica",] # menos de 5 meses de empresa OU fazem adm pública
+equipe_acp[equipe_acp$tempo_empresa > 2 & equipe_acp$tempo_empresa < 5,] # entre 2 e 5 meses de empresa
+```
+
+
+
+# Documentação
+
+## Documentação
+A função `rep()` é frequentemente útil. Ela permite criar vetores com valores repetidos. Vamos aproveitar para consultar a documentação desta função.
+
+```{r results='asis'}
+?rep()
+```
+Notem a diferença entre a declaração  *posicional* e *nominal* dos argumentos. 
+
+Além da documentação oficial do R, que às vezes pode ser precária ou difícil de entender, duas referências importantes são o Google e o [Stack Overflow](https://stackoverflow.com/)
+
+# Prática
+## Exercícios para praticar
+Se necessário, consulte a documentação das funções `seq()` e `rep()` para responder as perguntas 1 a 3:
+
+1. Use a função `seq()` para criar a seguinte sequência: 2, 5, 8,  11
+
+2. Use a função `rep()` para gerar a seguinte sequência: 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4
+
+3. Use a função `rep()` para gerar a seguinte sequência: 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4
+
+Para os exercícios **4 a 9**, você vai precisar carregar uma base de dados didática que já vem instalada no R. Para fazer isso, rode o comando `bd <- mtcars`, e você verá um dataframe chamado `bd` no seu ambiente. Examine a documentação da base de dados com o comando `help(mtcars)`, e use o comando `View(bd)` para inspecionar visualmente a base de dados.
+
+## Exercícios para praticar
+4. Crie um novo objeto que contenha apenas os carros cujo consumo (`mpg`) esteja entre 15 e 20.
+5. Crie um novo objeto que contenha apenas os carros com transmissão automoática e valor de `cyl` igual a 6.
+6. Crie um novo objeto que contenha apenas os carros cujos valores de `gear` ou `carb` sejam iguais a 0.
+7. Crie um novo objeto que tenha apenas as linhas pares de `bd`.
+8. Rode o comando `TRUE * FALSE` e explique o resultado.
+9. Troque todos os valores 0 por 2 na coluna `am`.
+
+## Exercícios para praticar
+10. Rode os comandos abaixo, e explique o resultado.
+```{r results='hide'}
+x <- c(2, 4, 6, 8)
+y <- c(TRUE, TRUE, FALSE, TRUE)
+sum(x[y])
+```
+
+11. Na Ciência Política, o conceito de Número Efetivo de Partidos é uma medida do grau de fragmentação de uma casa legislativa. Ele é calculado "dividindo-se 1 pelo somatório do quadrado das proporções de votos ou de cadeiras obtidos pelos partidos em uma dada eleição" ([clique aqui](http://datapolitica.com.br/eleicao/metodologia.html) para mais informações). 
+
+No quadro abaixo, criei um vetor com o número de cadeiras que cada partido possui na Câmara dos Deputados. Utilize essa informação e seus conhecimentos de programação para calcular o Número Efetivo de Partidos nessa casa.
+```{r}
+cadeiras <- c(55, 54, 38, 35, 34, 33, 32, 31, 30, 28, 27, 13, 11, 10, 10, 10, 8, 8, 8, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1)
+```
+
+
+
+

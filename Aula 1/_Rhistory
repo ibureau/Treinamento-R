@@ -1,0 +1,512 @@
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = B2020 <= 2
+)
+table(cses2$low_income, useNA = "always")
+table(cses2$B2020, useNA = "always")
+load("data/cses2.rdata")
+# Data wrangling
+cses2 <- cses2 %>%
+filter(B1006_NAM %in% c_list) %>%
+mutate(B3045 = case_when(B3045 > 10 ~ as.integer(NA),
+TRUE ~ B3045),
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = as.numeric(B2020 <= 2),
+high_income = as.numeric(B2020 >= 4))
+table(cses2$B2020, useNA = "always")
+table(cses2$low_income, useNA = "always")
+table(cses2$high_income, useNA = "always")
+typeof(B1006_NAM)
+typeof(cses2B1006_NAM)
+typeof(cses2$B1006_NAM)
+load("data/cses2.rdata")
+# Data wrangling
+cses2 <- cses2 %>%
+filter(B1006_NAM %in% c_list) %>%
+mutate(B1006_NAM = as.factor(B1006_NAM),
+B3045 = case_when(B3045 > 10 ~ as.integer(NA),
+TRUE ~ B3045),
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = as.numeric(B2020 <= 2),
+high_income = as.numeric(B2020 >= 4))
+typeof(cses2$B1006_NAM)
+View(cses2)
+levels(cses2$B1006_NAM)
+summary(cses2$B1006_NAM)
+class(cses2$B1006_NAM)
+m1 <- lmer(B3045 ~ low_income + (1 + low_income | B1006_NAM), data = cses2)
+summary(m1)
+?lmer
+# Models ----
+m1 <- lmer(B3045 ~ low_income + (1 + low_income | B1006_NAM), data = cses2)
+summary(m1)
+library(lme4)
+library(dplyr)
+library(here)
+here() # dir de trabalho
+load("data/cses2.rdata")
+# Lista de países no estudo
+paises <- c("Australia",
+"Bulgaria",
+"Canada",
+"Czech Republic",
+"Denmark",
+"Finland",
+"Germany",
+"Hungary",
+"Iceland",
+"Ireland",
+"Israel",
+"Netherlands",
+"New Zealand",
+"Norway",
+"Poland",
+"Portugal",
+"Romania",
+"Spain",
+"Sweden",
+"Switzerland",
+"Great Britain")
+# Preparo do banco ----
+cses2 <- cses2 %>%
+filter(B1006_NAM %in% paises) %>%
+mutate(B1006_NAM = as.factor(B1006_NAM),
+B3045 = case_when(B3045 > 10 ~ as.integer(NA),
+TRUE ~ B3045),
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = as.numeric(B2020 <= 2),
+high_income = as.numeric(B2020 >= 4))
+# Modelos ----
+m1 <- lmer(B3045 ~ low_income + (1 + low_income | B1006_NAM), data = cses2)
+summary(m1)
+library(lme4)
+library(dplyr)
+library(here)
+here() # dir de trabalho
+load("data/cses2.rdata")
+# Lista de países no estudo
+paises <- c("Australia",
+"Bulgaria",
+"Canada",
+"Czech Republic",
+"Denmark",
+"Finland",
+"Germany",
+"Hungary",
+"Iceland",
+"Ireland",
+"Israel",
+"Netherlands",
+"New Zealand",
+"Norway",
+"Poland",
+"Portugal",
+"Romania",
+"Spain",
+"Sweden",
+"Switzerland",
+"Great Britain")
+# Preparo do banco ----
+cses2 <- cses2 %>%
+filter(B1006_NAM %in% paises) %>%
+mutate(B1006_NAM = as.factor(B1006_NAM),
+B3045 = case_when(B3045 > 10 ~ as.integer(NA),
+TRUE ~ B3045),
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = as.numeric(B2020 <= 2),
+high_income = as.numeric(B2020 >= 4))
+# Modelos ----
+m1 <- lmer(B3045 ~ low_income + (1 + low_income | B1006_NAM), data = cses2)
+summary(m1)
+here()
+library(dplyr)
+library(dplyr)
+library(lme4)
+library(dplyr)
+library(lme4)
+library(arm)
+library(here)
+library(ggplot2)
+here()
+source(giger_replication.R)
+source("giger_replication.R")
+rm(paises)
+knit_with_parameters('C:/Users/Rafael/Desktop/Apresentação/hierarchical_models.rmd', encoding = 'UTF-8')
+unlink('hierarchical_models_cache', recursive = TRUE)
+unlink('hierarchical_models_cache', recursive = TRUE)
+library(lme4)
+library(dplyr)
+library(here)
+here() # dir de trabalho
+load("data/cses2.rdata")
+# Lista de países no estudo
+paises <- c("Australia",
+"Bulgaria",
+"Canada",
+"Czech Republic",
+"Denmark",
+"Finland",
+"Germany",
+"Hungary",
+"Iceland",
+"Ireland",
+"Israel",
+"Netherlands",
+"New Zealand",
+"Norway",
+"Poland",
+"Portugal",
+"Romania",
+"Spain",
+"Sweden",
+"Switzerland",
+"Great Britain")
+# Preparo do banco ----
+cses2 <- cses2 %>%
+filter(B1006_NAM %in% paises) %>%
+mutate(B1006_NAM = as.factor(B1006_NAM),
+B3045 = case_when(B3045 > 10 ~ as.integer(NA),
+TRUE ~ B3045),
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = as.numeric(B2020 <= 2),
+high_income = as.numeric(B2020 >= 4))
+with(cses2, table(B1006_NAM))
+load("data/cses2.rdata")
+# Lista de países no estudo
+paises <- c("Australia",
+"Bulgaria",
+"Canada",
+"Czech Republic",
+"Denmark",
+"Finland",
+"Germany",
+"Hungary",
+"Iceland",
+"Ireland",
+"Israel",
+"Netherlands",
+"New Zealand",
+"Norway",
+"Poland",
+"Portugal",
+"Romania",
+"Spain",
+"Sweden",
+"Switzerland",
+"Great Britain")
+# Preparo do banco ----
+cses2 <- cses2 %>%
+filter(B1006_NAM %in% paises) %>%
+mutate(B1006_NAM = as.factor(B1006_NAM),
+B3045 = case_when(B3045 > 10 ~ as.integer(NA),
+TRUE ~ B3045),
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = as.numeric(B2020 <= 2),
+high_income = as.numeric(B2020 >= 4))
+rm(paises)
+# Modelo ----
+m1 <- lmer(B3045 ~ low_income + (1 + low_income | B1006_NAM), data = cses2)
+summary(m1)
+?lmer
+sessionInfo()
+sessionInfo()
+sessionInfo()
+install.packages("revealjs")
+install.packages(c("dplyr", "lme4", "arm", "here", "ggplot2"))
+source("giger_replication.R")
+library(stargazer)
+install.packages("stargazer")
+stargazer(m1, align = TRUE)
+library(stargazer)
+stargazer(m1, align = TRUE)
+class(m1) <- "lmerMod"
+summary(m1)
+coef(m1)
+plot(coef(m1))
+typeof(coef(m1))
+coef <- as_tibble(coef(m1))
+coef <- coef(m1)
+View(coef)
+coef(m1)[[1]]
+coef <- as_tibble(coef(m1)[[1]])
+View(coef)
+qplot(coef)
+library(ggplot2)
+qplot(coef)
+qplot(coef)
+install.packages(sjPlot)
+install.packages("sjPlot")
+library(sjPlot)
+plot_model(m1, type = "re")
+?plot_model
+plot_model(m1, type = "re", sort.est = TRUE)
+plot_model(m1, type = "re", grid = FALSE, sort.est = "sort.all")
+plot_model(m1, type = "re", grid = FALSE, sort.est = TRUE)
+plot_model(m1, type = "re", grid = FALSE, sort.est = TRUE)[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = TRUE, colors = "bw")[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = TRUE, colors = "gs")[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = TRUE, colors = "bw")[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = TRUE, colors = "bw")
+plot_model(m1, type = "re", sort.est = "low_oncome", colors = "bw")
+plot_model(m1, type = "re", sort.est = "low_income", colors = "bw")
+plot_model(m1, type = "re", sort.est = "low_income", colors = "bw")[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = "low_income", colors = "bw")[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 95)[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.9)[[2]]
+coef(m1)
+plot_model(m1, type = "est", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.9)[[2]]
+plot_model(m1, type = "est", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.9)
+plot_model(m1, type = "slope", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)
+ranef(m1)
+?ranef
+plot_model(m1, grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)[[2]]
+plot_model(m1, grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)
+View(m1)
+plot_model(m1, type = "eff", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)
+plot_model(m1, type = "int", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)
+plot_model(m1, type = "std", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)
+plot_model(m1, type = "re", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)
+plot_model(coef(m1), type = "re", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)
+View(coef(m1))
+plot_model(m1, type = "re", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)[[2]]
+plot_model(m1, type = "re", grid = FALSE, sort.est = "low_income", colors = "bw", ci.lvl = 0.95)
+lm(B3045 ~ low_income * B1006_NAM, data = cses2)
+m2 <- lm(B3045 ~ low_income * B1006_NAM, data = cses2)
+library(arm)
+coefplot(m2)
+m2 <- lm(B3045 ~ low_income:B1006_NAM, data = cses2)
+coefplot(m2)
+?coefplot
+coefplot(m1)
+coefplot(m1)
+coefplot(m2)
+install.packages("coefplot")
+library(coefplot)
+coefplot::coefplot(m2)
+coefplot::coefplot(m2, intertept = FALSE)
+coefplot::coefplot(m1, intertept = FALSE)
+?coefplot::coefplot
+coefplot::coefplot(m1, intertept = FALSE, sort = "magnitude")
+coefplot::coefplot(m2, intertept = FALSE, sort = "magnitude")
+coefplot::coefplot(m2, intercept = FALSE, sort = "magnitude", color = "black")
+m2 <- lm(B3045 ~ low_income*B1006_NAM, data = cses2)
+coefplot(m2, intercept = FALSE, sort = "magnitude", color = "black", coefficients = "B3045")
+coefplot(m2, intercept = FALSE, sort = "magnitude", color = "black")
+m2 <- lm(B3045 ~ low_income:B1006_NAM, data = cses2)
+coefplot(m2, intercept = FALSE, sort = "magnitude", color = "black")
+coefplot(m2, intercept = FALSE, sort = "magnitude", color = "black", newNames = as.character(cses2$B3045))
+coefplot(m2, intercept = FALSE, sort = "magnitude", color = "black", newNames = cses2$B3045)
+coefplot(m2, intercept = FALSE, sort = "magnitude", color = "black")
+coef(summary(m1))
+install.packages("broom")
+library(broom)
+library(dplyr)
+library(lme4)
+library(arm)
+library(here)
+library(coefplot)
+library(broom)
+library(sjPlot)
+here() # dir de trabalho
+coefplot <- coefplot::coefplot
+source("giger_replication.R")
+m2 <- lm(B3045 ~ low_income:B1006_NAM, data = cses2)
+m2_df <- tidy(m2)
+m1_df <- tidy(m1)
+View(m1_df)
+View(m1_df)
+coef(m1)
+coef(m1)[1]
+coef(m1)[[1]
+]
+as_tibble(coef(m1))
+as.data.frame(coef(m1))
+as_tibble(coef(m1))[[1]]
+as_tibble(coef(m1))[1]
+as_tibble(coef(m1)[1])
+as_tibble(coef(m1)[[1])
+View(coef(m1))
+View(coef(m1)[["B1006_NAM"]])
+m1_df <- coef(m1)[["B1006_NAM"]] %>%
+as_tibble()
+View(m1_df)
+m1_df <- coef(m1)[["B1006_NAM"]] %>%
+as_tibble() %>%
+cbind(coef(m1)[["B1006_NAM"]])
+View(m1_df)
+m1_df <- coef(m1)[["B1006_NAM"]] %>%
+as_tibble() %>%
+cbind(se.coef(m1)[["B1006_NAM"]])
+View(m1_df)
+names(m1_df)
+install.packages("dotwhisker")
+library(dotwhisker)
+m1_df <- coef(m1)[["B1006_NAM"]] %>%
+as_tibble() %>%
+cbind(se.coef(m1)[["B1006_NAM"]]) %>%
+select(1, 3)
+m1_df <- coef(m1)[["B1006_NAM"]] %>%
+as_tibble() %>%
+cbind(se.coef(m1)[["B1006_NAM"]]) %>%
+select(c(1, 3))
+m1_df <- coef(m1)[["B1006_NAM"]] %>%
+as_tibble() %>%
+cbind(se.coef(m1)[["B1006_NAM"]]) %>%
+select(starts_with("low"))
+m1_df <- as_tibble(cbind(coef(m1)[["B1006_NAM"]], (se.coef(m1)[["B1006_NAM"]])
+m1_df <- as_tibble(cbind(coef(m1)[["B1006_NAM"]], se.coef(m1)[["B1006_NAM"]]))
+View(coef(m1))
+m1_df <- as_tibble(term = row.names(coef(m1)),
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]],
+std.error = se.coef(m1)[["B1006_NAM"]][["low_income"]])
+View(m1_df)
+row.names(coef(m1))
+m1_df <- as_tibble(term = row.names(coef(m1)[["B1006_NAM"]]),
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]],
+std.error = se.coef(m1)[["B1006_NAM"]][["low_income"]])
+row.names(coef(m1)[["B1006_NAM"]]
+)
+term = row.names(coef(m1)[["B1006_NAM"]])
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]]
+std.error = se.coef(m1)[["B1006_NAM"]][["low_income"]]
+se.coef(m1)
+View(se.coef(m1))
+m1_df <- as_tibble(term = row.names(coef(m1)[["B1006_NAM"]]),
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]],
+std.error = se.coef(m1)[["B1006_NAM"]])
+std.error = se.coef(m1)[["B1006_NAM"]]
+View(std.error)
+std.error = se.coef(m1)[["B1006_NAM"]][,2]
+m1_df <- as_tibble(term = row.names(coef(m1)[["B1006_NAM"]]),
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]],
+std.error = se.coef(m1)[["B1006_NAM"]][,2])
+se.coef(m1)[["B1006_NAM"]][,2]
+coef(m1)[["B1006_NAM"]][["low_income"]]
+row.names(coef(m1)[["B1006_NAM"]])
+typeof(std.error)
+as.numeric(se.coef(m1)[["B1006_NAM"]][,2]))
+as.numeric(se.coef(m1)[["B1006_NAM"]][,2])
+m1_df <- as_tibble(term = row.names(coef(m1)[["B1006_NAM"]]),
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]],
+std.error = as.numeric(se.coef(m1)[["B1006_NAM"]][,2]))
+m1_df <- tibble(term = row.names(coef(m1)[["B1006_NAM"]]),
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]],
+std.error = as.numeric(se.coef(m1)[["B1006_NAM"]][,2]))
+# Modelo ----
+m1 <- lmer(B3045 ~ low_income + (1 + low_income | B1006_NAM), data = cses2)
+library(lme4)
+library(dplyr)
+library(here)
+here() # dir de trabalho
+load("data/cses2.rdata")
+# Variáveis de interesse ----
+# B1006_NAM>>> ID COMPONENT - POLITY NAME
+# B3045    >>> LEFT-RIGHT - SELF
+# B2020    >>> HOUSEHOLD INCOME
+# Lista de países no estudo
+paises <- c("Australia",
+"Bulgaria",
+"Canada",
+"Czech Republic",
+"Denmark",
+"Finland",
+"Germany",
+"Hungary",
+"Iceland",
+"Ireland",
+"Israel",
+"Netherlands",
+"New Zealand",
+"Norway",
+"Poland",
+"Portugal",
+"Romania",
+"Spain",
+"Sweden",
+"Switzerland",
+"Great Britain")
+# Preparo do banco ----
+cses2 <- cses2 %>%
+filter(B1006_NAM %in% paises) %>%
+mutate(B1006_NAM = as.factor(B1006_NAM),
+B3045 = case_when(B3045 > 10 ~ as.integer(NA),
+TRUE ~ B3045),
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = as.numeric(B2020 <= 2),
+high_income = as.numeric(B2020 >= 4))
+rm(paises)
+# Modelo ----
+m1 <- lmer(B3045 ~ low_income + (1 + low_income | B1006_NAM), data = cses2)
+summary(m1)
+m1_df <- tibble(term = row.names(coef(m1)[["B1006_NAM"]]),
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]],
+std.error = as.numeric(se.coef(m1)[["B1006_NAM"]][,2]))
+View(m1_df)
+library(dotwhisker)
+dwplot(m1_df)
+?dwplot
+dwplot(m1_df, colour = "black", order_vars = "estimate")
+dwplot(m1_df, colour = "black", order_vars = estimate)
+dwplot(m1_df, colour = "black", order_vars = m1_df$estimate)
+m1_df <- tibble(term = row.names(coef(m1)[["B1006_NAM"]]),
+estimate = coef(m1)[["B1006_NAM"]][["low_income"]],
+std.error = as.numeric(se.coef(m1)[["B1006_NAM"]][,2])) %>%
+arrange(desc(estimate))
+View(m1_df)
+dwplot(m1_df, colour = "black", order_vars = m1_df$estimate)
+dwplot(m1_df, colour = "black")
+dwplot(m1_df, color = "black")
+dwplot(m1_df, color = black)
+library(lme4)
+library(dplyr)
+library(here)
+here() # dir de trabalho
+load("data/cses2.rdata")
+# Lista de países no estudo
+paises <- c("Australia",
+"Bulgaria",
+"Canada",
+"Czech Republic",
+"Denmark",
+"Finland",
+"Germany",
+"Hungary",
+"Iceland",
+"Ireland",
+"Israel",
+"Netherlands",
+"New Zealand",
+"Norway",
+"Poland",
+"Portugal",
+"Romania",
+"Spain",
+"Sweden",
+"Switzerland",
+"Great Britain")
+# Preparo do banco ----
+cses2 <- cses2 %>%
+filter(B1006_NAM %in% paises) %>%
+mutate(B1006_NAM = as.factor(B1006_NAM),
+B3045 = case_when(B3045 > 10 ~ as.integer(NA),
+TRUE ~ B3045),
+B2020 = case_when(B2020 > 5 ~ as.integer(NA),
+TRUE ~ B2020),
+low_income = as.numeric(B2020 <= 2),
+high_income = as.numeric(B2020 >= 4))
+rm(paises)
+# Modelo ----
+m1 <- lmer(B3045 ~ low_income + (1 + low_income | B1006_NAM), data = cses2)
+summary(m1)
+# Guardar .csv
+write.csv2(cses2, "base_limpa.csv")
+# Guardar .csv
+write.csv2(cses2, "data/base_limpa.csv")
